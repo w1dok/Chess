@@ -3,6 +3,7 @@ import sys
 
 from const import * 
 from game import Game
+from square import Square
 
 class Main:
     def __init__(self):
@@ -18,7 +19,7 @@ class Main:
         
         while True:
             game.show_bg(screen)
-            
+            game.show_pieces(screen)
             
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
