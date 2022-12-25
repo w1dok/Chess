@@ -16,11 +16,42 @@ class Board:
         '''
             Calculate all the possible (valid) moves of an specific piece on a specefic position
         '''
+        def pawn_moves():
+            # steps
+            steprs = 1 if piece.moved else 2
+            
+            #vertical moves
+            start = row + piece.dir
+            end = row + (piece.dir * (1 + steprs))
+            for possible_move_row in range(start, end, piece.dir):
+                if Square.in_range(possible_move_row):
+                    if self.squares[possible_move_row][col].isempty():
+                        # create initial and final move squares
+                        initial = Square(row, col)
+                        final = Square(possible_move_row, col)
+                        # create a new move
+                        move = Move(initial, final)
+                        piece.add_move(move)
+                    # blocked
+                    else: break 
+                else: break
+                        
+            # diagonal_moves 
+            possible_move_row = row + piece.dir
+            possible_move_cols = [col-1, col+1]
+            for possible_move_col in possible_move_cols:
+                if Square.in_range(possible_move_row, possible_move_col):
+                    if self.squares[possible_move_row][possible_move_col].has_enemy_piece(piece.color):
+                        initial = Square(row, col)
+                        final = Square(possible_move_row, possible_move_col)
+                        move = Move(initial, final)
+                        piece.add_move(move)
+                    
         
         def knight_moves():
             # 8 possible moves
             possible_moves = [
-                (row-2, col+1),
+                (row-2, col+1), 
                 (row-1, col+2),
                 (row+1, col+2),
                 (row+2, col+1),
@@ -34,7 +65,7 @@ class Board:
                 possible_move_row, possible_move_col = possible_move
                 
                 if Square.in_range(possible_move_row, possible_move_col):
-                    if self.squares[possible_move_row][possible_move_col].isempty_or_rival(piece.color):
+                    if self.squares[possible_move_row][possible_move_col].isempty_or_enemy(piece.color):
                         # create squares of the new move
                         initial = Square(row, col)
                         final = Square(possible_move_row, possible_move_col) # piece = piece
@@ -42,23 +73,13 @@ class Board:
                         move = Move(initial, final)
                         piece.add_move(move)
         
-        if isinstance(piece, Pawn):
-            pass
+        if isinstance(piece, Pawn): pawn_moves()
         
-        elif isinstance(piece, Knight):
-            knight_moves()
-        
-        elif isinstance(piece, Bishop):
-            pass
-        
-        elif isinstance(piece, Rook):
-            pass
-        
-        elif isinstance(piece, Queen):
-            pass
-        
-        elif isinstance(piece, King):
-            pass
+        elif isinstance(piece, Knight): knight_moves()
+        elif isinstance(piece, Bishop): pass
+        elif isinstance(piece, Rook): pass
+        elif isinstance(piece, Queen): pass
+        elif isinstance(piece, King): pass
     
     def _create(self):
         for row in range(rows):

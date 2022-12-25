@@ -48,9 +48,9 @@ class Game:
             # loop all valid moves
             for move in piece.moves:
                  # color
-                 color = '#C86464' if (move.final.row + move.final.col) % 2 == 0 else '@C84646'
+                 color = '#C86464' if (move.final.row + move.final.col) % 2 == 0 else '#C84646'
                  # rect
-                 rect = (move.final.col * sqsize, move.final.raw * sqsize, sqsize, sqsize)
+                 rect = (move.final.col * sqsize, move.final.row * sqsize, sqsize, sqsize)
                  # blit
                  pygame.draw.rect(surface, color, rect)
                     
