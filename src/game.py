@@ -29,6 +29,22 @@ class Game:
                 rect = (col * sqsize, row * sqsize, sqsize, sqsize)
                 # blit
                 pygame.draw.rect(surface, color, rect)
+                
+                # row coordinates
+                if col == 0:
+                    color = theme.bg.dark if row % 2 == 0 else theme.bg.light
+                    lbl = self.config.font.render(str(rows - row), 1, color)
+                    lbl_pos = (5, 5 + row * sqsize)
+                    surface.blit(lbl, lbl_pos)
+                    
+                # col coordinates
+                if row == 7:
+                    color = theme.bg.dark if (row + col) % 2 == 0 else theme.bg.light
+                    lbl = self.config.font.render(Square.get_alphacol(col), 1, color)
+                    lbl_pos = (col * sqsize + sqsize - 20, height - 20)
+                    surface.blit(lbl, lbl_pos)
+                     
+                
                     
     def show_pieces(self, surface):
         for row in range(rows):
@@ -101,3 +117,6 @@ class Game:
             self.config.captire_sound.play()
         else:
             self.config.move_sound.play()
+    
+    def reset(self):
+        self.__init__()
