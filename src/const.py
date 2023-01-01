@@ -1,11 +1,11 @@
 # Screen dimensions
-width = 800
-height = 800
+WIDTH = 800
+HEIGHT = 800
 
 # Board dimensions
-rows = 8
-cols = 8
-sqsize = width // cols
+ROWS = 8
+COLS = 8
+SQSIZE = WIDTH // COLS
 
 
 
